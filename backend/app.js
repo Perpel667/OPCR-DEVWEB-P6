@@ -1,4 +1,4 @@
-// declare dans des variables les modules dont l'app a besoin
+// declare dans des variables les packages dont l'app a besoin
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
