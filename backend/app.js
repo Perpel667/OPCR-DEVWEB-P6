@@ -3,6 +3,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+// recupere les routes users
+const usersRoutes = require('./routes/users');
 
 
 dotenv.config();
@@ -31,6 +33,9 @@ app.use((req, res, next) => {
 
   // transforme le corp de la requete en JSON
   app.use(bodyParser.json());
+
+  // importe usersRoutes et appliquer a la route définie (/api/auth/)
+  app.use('/api/auth/', usersRoutes);
 
 // exporte le module app.js
 module.exports = app;
