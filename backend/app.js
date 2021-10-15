@@ -2,10 +2,19 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-
+const dotenv = require('dotenv');
 dotenv.config();
 
 const app = express();
+// recuperation de l'URI de connexion a mongoDB depuis le dotenv
+const url = process.env.MONGOLAB_URI;
+
+// connexion a mongoDB
+mongoose.connect(url,
+    { useNewUrlParser: true,
+      useUnifiedTopology: true })
+    .then(() => console.log('Connexion à MongoDB réussie !'))
+    .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 // definition des headers
 app.use((req, res, next) => {
