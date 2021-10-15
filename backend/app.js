@@ -1,5 +1,6 @@
-// creer la constante express qui a besoin du package express
+// declare dans des variables les modules dont l'app a besoin
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
 
@@ -13,6 +14,9 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
   });
+
+  // transforme le corp de la requete en JSON
+  app.use(bodyParser.json());
 
 // exporte le module app.js
 module.exports = app;
