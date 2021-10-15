@@ -6,7 +6,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 // recupere la chaîne secrete dans le dotenv
-const WEBTOKEN = SECRET_TOKEN;
+const WEBTOKEN = process.env.JWT_SECRET;
 
 // importe dans une variable User le schema mongoose du même nom
 const User = require('../models/User');
