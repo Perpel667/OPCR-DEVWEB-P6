@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const path = require('path');
 // recupere les routes users
 const usersRoutes = require('./routes/users');
 // recupere les routes sauces
@@ -35,7 +36,8 @@ app.use((req, res, next) => {
 
   // transforme le corp de la requete en JSON
   app.use(bodyParser.json());
-
+  // utilisation du path pour pouvoir recuperer les images
+  app.use('/images', express.static(path.join(__dirname, 'images')));
   // importe usersRoutes et appliquer a la route définie (/api/auth/)
   app.use('/api/auth/', usersRoutes);
   //importe saucesRoutes et applique a la route définie (/api/sauces)
