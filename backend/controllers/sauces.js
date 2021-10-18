@@ -32,3 +32,22 @@ exports.createSauce = (req, res, next) => {
     // si la sauce n'a pas été creer
     .catch(error => res.status(400).json({ error }));
 };
+
+// middleware récuperation des sauces
+exports.getAllSauces = (req, res, next) => {
+  // on viens chercher toutes les sauces sur la page //
+  Sauce.find().then(
+    (sauces) => {
+      // si des sauces sont trouvées on renvoi un status 200 et on converti la réponse sauces avec .json
+      res.status(200).json(sauces);
+    }
+  ).catch(
+    (error) => {
+      // si il y a une erreur on renvoi un status 400 avec le message d'erreur
+      res.status(400).json({
+        error: error
+      });
+    }
+  );
+};
+
