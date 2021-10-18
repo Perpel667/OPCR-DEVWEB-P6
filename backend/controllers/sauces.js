@@ -28,7 +28,7 @@ exports.createSauce = (req, res, next) => {
   // enregistrement de la sauce dans la base de données mongoDB
   sauce.save()
   // si la sauce de a été créer
-    .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
+    .then(() => res.status(201).json({ message: 'Sauce enregistrée !'}))
     // si la sauce n'a pas été creer
     .catch(error => res.status(400).json({ error }));
 };
@@ -69,4 +69,20 @@ exports.getOneSauce = (req, res, next) => {
       });
     }
   );
+};
+
+// middleware modification d'une sauce
+exports.modifySauce = (req, res, next) => {
+  // création d'un objet qui regarde si req.file existe 
+  const sauceObject = req.file ?
+    {
+      // si il existe on recuperer avec parse et on genere l'imageUrl
+      ...JSON.parse(req.body.sauce),
+      imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+      // si il n'existe pas on envoi tout le body de la requete
+    } : { ...req.body };
+    // on met la sauce a jour avec comme argument on met l'id envoyer par les parametre de requetes et le 2eme argument c'est le nouvel objet et on recupere l'id pour avoir les memes
+  Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
+    .then(() => res.status(200).json({ message: 'Sauce modifiée !'}))
+    .catch(error => res.status(400).json({ error }));
 };
