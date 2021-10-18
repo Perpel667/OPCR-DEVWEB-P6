@@ -86,3 +86,21 @@ exports.modifySauce = (req, res, next) => {
     .then(() => res.status(200).json({ message: 'Sauce modifiée !'}))
     .catch(error => res.status(400).json({ error }));
 };
+
+//middleware supression d'une sauce
+exports.deleteSauce = (req, res, next) => {
+  // on viens recuperer la sauce avec son id
+  Sauce.findOne({ _id: req.params.id })
+    .then(sauce => {
+      // on recupere le 2eme element du tableau retourner par split donc le nom de fichier
+      const filename = sauce.imageUrl.split('/images/')[1];
+      // on utilise unlink pour supprimer un fichier avec le chemin (images/${filename})
+      fs.unlink(`images/${filename}`, () => {
+        // et en callback on met la supression de l'image dans la base de données
+        Sauce.deleteOne({ _id: req.params.id })
+          .then(() => res.status(200).json({ message: 'Sauce supprimée !'}))
+          .catch(error => res.status(400).json({ error }));
+      });
+    })
+    .catch(error => res.status(500).json({ error }));
+};
