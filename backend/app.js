@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 // recupere les routes users
 const usersRoutes = require('./routes/users');
+// recupere les routes sauces
+ const saucesRoutes = require('./routes/sauces');
 
 
 dotenv.config();
@@ -36,6 +38,8 @@ app.use((req, res, next) => {
 
   // importe usersRoutes et appliquer a la route définie (/api/auth/)
   app.use('/api/auth/', usersRoutes);
+  //importe saucesRoutes et applique a la route définie (/api/sauces)
+  app.use('/api/sauces',saucesRoutes);
 
 // exporte le module app.js
 module.exports = app;
