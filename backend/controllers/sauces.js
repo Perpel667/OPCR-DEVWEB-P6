@@ -22,6 +22,7 @@ exports.createSauce = (req, res, next) => {
   const sauce = new Sauce({
       // on envoi tout les elements de la sauce de la requete
     ...sauceObject,
+    // resolution complete de l'URL de l'image
     imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
   });
   // enregistrement de la sauce dans la base de données mongoDB
