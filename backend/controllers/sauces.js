@@ -94,7 +94,7 @@ exports.deleteSauce = (req, res, next) => {
     .then(sauce => {
       // on recupere le 2eme element du tableau retourner par split donc le nom de fichier
       const filename = sauce.imageUrl.split('/images/')[1];
-      // on utilise unlink pour supprimer un fichier avec le chemin (images/${filename})
+      // on utilise unlink du package filesystem pour supprimer un fichier avec le chemin (images/${filename})
       fs.unlink(`images/${filename}`, () => {
         // et en callback on met la supression de l'image dans la base de données
         Sauce.deleteOne({ _id: req.params.id })
