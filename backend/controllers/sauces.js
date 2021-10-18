@@ -51,3 +51,22 @@ exports.getAllSauces = (req, res, next) => {
   );
 };
 
+// middleware récuperation d'une sauce en particulier
+exports.getOneSauce = (req, res, next) => {
+  // on viens chercher une sauce en particulier avec son params.id//
+  Sauce.findOne({
+    _id: req.params.id
+  }).then(
+    (sauce) => {
+      // si on la trouve on renvoi un status 200 et on converti la reponse avec .json
+      res.status(200).json(sauce);
+    }
+  ).catch(
+    (error) => {
+      // si il y a une erreur on renvoi un status 404 avec le message d'erreur
+      res.status(404).json({
+        error: error
+      });
+    }
+  );
+};
