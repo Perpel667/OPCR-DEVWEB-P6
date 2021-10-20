@@ -17,7 +17,7 @@ exports.createSauce = (req, res, next) => {
   sauceObject.usersLiked = [];
   sauceObject.usersDisliked = [];
   // supression de l'id de base
-  delete sauceObject._id;
+  /* delete sauceObject._id; */
   // creation de la sauce
   const sauce = new Sauce({
       // on envoi tout les elements de la sauce de la requete
