@@ -1,7 +1,6 @@
 // declare dans des variables les packages dont l'app a besoin
 const express = require('express');
 const helmet = require('helmet');
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const path = require('path');
@@ -38,7 +37,7 @@ app.use((req, res, next) => {
   });
 
   // transforme le corp de la requete en JSON
-  app.use(bodyParser.json());
+  app.use(express.json());
   // utilisation du path pour pouvoir recuperer les images
   app.use('/images', express.static(path.join(__dirname, 'images')));
   // importe usersRoutes et appliquer a la route définie (/api/auth/)
