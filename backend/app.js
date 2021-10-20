@@ -1,6 +1,7 @@
 // declare dans des variables les packages dont l'app a besoin
 const express = require('express');
 const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const path = require('path');
@@ -14,7 +15,11 @@ dotenv.config();
 
 const app = express();
 
+// utilisation du middleware helmet pour configurer de maniere appropriée les en-têtes HTTP
 app.use(helmet());
+
+// utilisation du middleware express-mongo-sanitize pour proteger des injection NOSQL
+app.use(mongoSanitize());
 // recuperation de l'URI de connexion a mongoDB depuis le dotenv
 const url = process.env.MONGOLAB_URI;
 
