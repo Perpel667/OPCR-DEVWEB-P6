@@ -1,5 +1,6 @@
 // declare dans des variables les packages dont l'app a besoin
 const express = require('express');
+const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
@@ -13,6 +14,8 @@ const usersRoutes = require('./routes/users');
 dotenv.config();
 
 const app = express();
+
+app.use(helmet());
 // recuperation de l'URI de connexion a mongoDB depuis le dotenv
 const url = process.env.MONGOLAB_URI;
 
