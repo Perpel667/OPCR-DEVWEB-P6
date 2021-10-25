@@ -2,6 +2,7 @@
 const express = require('express');
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
+const rateLimit = require('express-rate-limit');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const path = require('path');
@@ -9,7 +10,11 @@ const path = require('path');
 const usersRoutes = require('./routes/users');
 // recupere les routes sauces
  const saucesRoutes = require('./routes/sauces');
-
+// Create the rate limit rule
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100 // limit each IP to 100 requests per windowMs
+});
 
 dotenv.config();
 
@@ -20,6 +25,8 @@ app.use(helmet());
 
 // utilisation du middleware express-mongo-sanitize pour proteger des injection NOSQL
 app.use(mongoSanitize());
+//utilisation du middleware express-rate-limit pour proteger des attaques brute force
+ app.use(limiter); 
 // recuperation de l'URI de connexion a mongoDB depuis le dotenv
 const url = process.env.MONGOLAB_URI;
 
